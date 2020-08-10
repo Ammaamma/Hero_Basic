@@ -1,1 +1,1 @@
-web: gunicorn app:namo
+web: gunicorn namo:namo
