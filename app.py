@@ -1,51 +1,101 @@
-# app.py
-from flask import Flask, request, jsonify
-app = Flask(__name__)
+from tkinter import *
 
-@app.route('/getmsg/', methods=['GET'])
-def respond():
-    # Retrieve the name from url parameter
-    name = request.args.get("name", None)
+root = Tk()
+root.title("Calculator")
 
-    # For debugging
-    print(f"got name {name}")
+e = Entry(root, width = 20)
+e.grid(row = 0, column = 0, columnspan = 4)
 
-    response = {}
+def buttonClick(number):
+    e.delete(0,END)
+    e.insert(0,number)
 
-    # Check if user sent a name at all
-    if not name:
-        response["ERROR"] = "no name found, please send a name."
-    # Check if the user entered a number not a name
-    elif str(name).isdigit():
-        response["ERROR"] = "name can't be numeric."
-    # Now the user entered a valid name
-    else:
-        response["MESSAGE"] = f"Welcome {name} to our awesome platform!!"
 
-    # Return the response in json format
-    return jsonify(response)
+def buttonClear():
+    e.delete(0,END)
 
-@app.route('/post/', methods=['POST'])
-def post_something():
-    param = request.form.get('name')
-    print(param)
-    # You can add the test cases you made in the previous function, but in our case here you are just testing the POST functionality
-    if param:
-        return jsonify({
-            "Message": f"Welcome {name} to our awesome platform!!",
-            # Add this option to distinct the POST request
-            "METHOD" : "POST"
-        })
-    else:
-        return jsonify({
-            "ERROR": "no name found, please send a name."
-        })
+def buttonAdd():
+    first_number = e.get()
+    global first_num
+    first_num = int(first_number)
+    e.delete(0,END)
+    global operation
+    operation = 'addition'
 
-# A welcome message to test our server
-@app.route('/')
-def index():
-    return "<h1>Welcome to our server !!</h1>"
+def buttonSubtraction():
+    first_number = e.get()
+    global first_num
+    first_num = int(first_number)
+    e.delete(0,END)
+    global operation
+    operation = 'subtraction'
 
-if __name__ == '__main__':
-    # Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True, port=5000)
+def buttonMultiplication():
+    first_number = e.get()
+    global first_num
+    first_num = int(first_number)
+    e.delete(0,END)
+    global operation
+    operation = 'multiplication'
+
+def buttonDivision():
+    first_number = e.get()
+    global first_num
+    first_num = int(first_number)
+    e.delete(0,END)
+    global operation
+    operation = 'division'
+
+def buttonEqual():
+    second_number = e.get()
+    global second_num
+    second_num = int(second_number)
+    e.delete(0,END)
+    if operation == 'addition':
+        sum = first_num + second_num
+        e.insert(0,sum)
+    elif operation == 'multiplication':
+        product = first_num * second_num
+        e.insert(0,product)
+    elif operation == 'division':
+        quotient = first_num / second_num
+        e.insert(0,quotient)
+    elif operation == 'subtraction':
+        difference = first_num - second_num
+        e.insert(0,difference)
+
+button_1=Button(root, text = 1, width = 3,command=lambda: buttonClick(1))
+button_2=Button(root, text = 2, width = 3,command=lambda: buttonClick(2))
+button_3=Button(root, text = 3, width = 3,command=lambda:buttonClick(3))
+button_4=Button(root, text = 4, width = 3, command=lambda:buttonClick(4))
+button_5=Button(root, text = 5, width = 3,command=lambda:buttonClick(5))
+button_6=Button(root, text = 6, width = 3,command=lambda:buttonClick(6))
+button_7=Button(root, text = 7, width = 3, command=lambda:buttonClick(7))
+button_8=Button(root, text = 8, width = 3,command=lambda:buttonClick(8))
+button_9=Button(root, text = 9, width = 3,command=lambda:buttonClick(9))
+button_0=Button(root, text = 0, width = 3,command=lambda:buttonClick(0))
+
+button_addition=Button(root, text = "+", width = 3, command=buttonAdd)
+button_subtraction=Button(root, text = "-", width = 3,command=buttonSubtraction)
+button_equal=Button(root, text = "=", width = 3,command=buttonEqual)
+button_division=Button(root, text = "/", width = 3,command=buttonDivision)
+button_multiplaction=Button(root, text = "*", width = 3,command=buttonMultiplication)
+button_clear=Button(root, text = "c", width = 3,command=buttonClear)
+
+button_1.grid(row =4 , column =0 )
+button_2.grid(row = 4, column =1 )
+button_3.grid(row = 4, column = 2)
+button_4.grid(row = 3, column =0 )
+button_5.grid(row = 3, column =1 )
+button_6.grid(row = 3, column = 2)
+button_7.grid(row = 2, column = 0)
+button_8.grid(row = 2, column = 1)
+button_9.grid(row = 2, column = 2)
+button_0.grid(row = 5, column =0)
+button_multiplaction.grid(row = 4, column =4 )
+button_clear.grid(row = 1, column =0 )
+button_addition.grid(row = 2, column =4 )
+button_subtraction.grid(row =3 , column =4 )
+button_equal.grid(row =1 , column = 4)
+button_division.grid(row = 5, column = 4)
+root.mainloop()
