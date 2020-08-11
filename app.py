@@ -4,10 +4,8 @@ app = Flask(__name__)
 
 
 # A welcome message to test our server
-@app.route('/')
 def index():
     return "<h1>You are beautiful</h1>"
-    return "<h2>Welcome Home!</h2>"
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support
